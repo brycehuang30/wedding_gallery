@@ -2,41 +2,60 @@
 <div class="gallery-container">
 
   <div class="gallery">
-    <div v-for="(photo, index) in photos" :key="index" class="gallery-item">
+    <div v-for="(photo, index) in preview_photos" :key="index" class="gallery-item" @click="() => onShowLightBox(index)">
       <figure>
-        <img :src="photo.sm" />
-
+        <img :src="photo" />
         
         <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
       </figure>
     <!-- <p>OMG, seriously how cute are these dogs?</p> -->
     </div>
+
+    <vue-easy-lightbox
+      :visible="is_lightbox_visible_ref"
+      :index="lightbox_index_ref"
+      :imgs="large_photos"
+      :moveDisabled="true"
+      :minZoom="1"
+      :maxZoom="1.5"
+      @hide="onHideLightBox"
+    >
+      <toolbar></toolbar>
+    </vue-easy-lightbox>
   </div>
 </div>
 </template>
 
 <script lang="ts">
-
-interface Photo {
-  sm: string,
-  lg: string,
-}
+import VueEasyLightbox from 'vue-easy-lightbox'
 
 export default {
+  components: {
+    VueEasyLightbox,
+  },
   data() {
     return {
-      photos: [] as Photo[],
+      preview_photos: [] as string[],
+      large_photos: [] as string[],
       gallery_url: "https://storage.googleapis.com/wedding_gallery/gallery-photos",
+      is_lightbox_visible_ref: false,
+      lightbox_index_ref: 0,
     }
   },
+  methods: {
+    onShowLightBox(index: number) {
+      this.is_lightbox_visible_ref = true;
+      this.lightbox_index_ref = index;
+    },
+
+    onHideLightBox() {
+      this.is_lightbox_visible_ref = false;
+    },
+  },
   mounted() {
-    for(let i = 1; i <= 50; i++) {
-      this.photos.push(
-        {
-          sm: `${this.gallery_url}/${i}_sm.jpg`,
-          lg: `${this.gallery_url}/${i}.jpg`
-        }
-      )
+    for (let i = 1; i <= 50; i++) {
+      this.preview_photos.push(`${this.gallery_url}/${i}_sm.jpg`);
+      this.large_photos.push(`${this.gallery_url}/${i}.jpg`);
     }
   }
 }
@@ -57,6 +76,7 @@ export default {
   font-family: arial;
 }
 .gallery-item {
+  cursor: pointer;
   break-inside: avoid;
   margin-bottom: 16px;
 }
@@ -86,6 +106,14 @@ export default {
 .gallery-item p {
   margin: 0;
   padding: 8px;
+}
+
+:deep(.vel-btns-wrapper) {
+  width : 100%;
+  height : 100%;
+}
+:deep(.toolbar-btn__rotate) {
+  display: none;
 }
 
 @media screen and (max-width: 500px) {
