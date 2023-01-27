@@ -1,4 +1,6 @@
 <template>
+<div class="gallery-container">
+
   <div class="gallery">
     <div v-for="photo_id in 50" :key="photo_id" class="gallery-item">
       <figure>
@@ -6,6 +8,7 @@
         <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
       </figure>
     <!-- <p>OMG, seriously how cute are these dogs?</p> -->
+    </div>
   </div>
 </div>
 </template>
@@ -28,6 +31,13 @@ export default {
 </script>
 
 <style scoped>
+
+.gallery-container {
+  margin: 2rem auto;
+  height: 90vh;
+  overflow: auto;
+}
+
 .gallery {
   max-width: 1200px;
   margin: 0 auto;
@@ -77,6 +87,10 @@ export default {
   }
 }
 @media screen and (min-width: 701px) and (max-width: 900px) {
+  .gallery-container {
+    overflow: unset;
+  }
+
   .gallery {
     column-count: 3;
   }
