@@ -1,0 +1,85 @@
+<template>
+  <div class="gallery">
+    <div v-for="photo_id in 50" :key="photo_id" class="gallery-item">
+      <figure>
+        <img :src="`../src/assets/修圖/${photo_id}_sm.jpg`" />
+        <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
+      </figure>
+    <!-- <p>OMG, seriously how cute are these dogs?</p> -->
+  </div>
+</div>
+</template>
+
+<script lang="ts">
+export default {
+  data() {
+    return {
+      photos: [
+        {
+          src: "_DSC2051.jpg",
+        },
+        {
+          src: "_DSC2059.jpg",
+        },
+      ],
+    }
+  }
+}
+</script>
+
+<style scoped>
+.gallery {
+  max-width: 1200px;
+  margin: 0 auto;
+  column-count: 4;
+  font-family: arial;
+}
+.gallery-item {
+  break-inside: avoid;
+  margin-bottom: 16px;
+}
+.gallery-item figure {
+  margin: 0;
+  position: relative;
+}
+.gallery-item figcaption {
+  font-style: italic;
+  padding: 8px;
+  position: absolute;
+  background: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  box-sizing: border-box;
+  bottom: 3px;
+  color: #fff;
+  height: 30px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border-radius: 0 0 14px 14px;
+}
+.gallery-item img {
+  width: 100%;
+  border-radius: 14px;
+}
+.gallery-item p {
+  margin: 0;
+  padding: 8px;
+}
+
+@media screen and (max-width: 500px) {
+  .gallery {
+    column-count: 1;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 700px) {
+  .gallery {
+    column-count: 2;
+  }
+}
+@media screen and (min-width: 701px) and (max-width: 900px) {
+  .gallery {
+    column-count: 3;
+  }
+}
+
+</style>
