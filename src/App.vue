@@ -8,7 +8,7 @@ import HelloWorld from './components/HelloWorld.vue'
     <!-- <img alt="Vue logo" class="logo" src="@/assets/invitation_1.jpg" width="125" height="125" /> -->
 
     <div class="wrapper">
-      <HelloWorld msg="Bryce & Joanna 的婚紗圖庫" />
+      <HelloWorld />
 
       <!-- <nav>
         <RouterLink to="/">Home</RouterLink>

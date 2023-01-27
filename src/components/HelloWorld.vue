@@ -1,12 +1,9 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
 </script>
 
 <template>
   <div class="greetings">
-    <h1 class="green">{{ msg }}</h1>
+    <h1 class="green">Bryce & Joanna <br> 的婚紗圖庫</h1>
     <h3>
       2014年，考完學測後，我們在英語會話補習班相遇了。那是一個意料之外的邂逅，我們從未想過會在這裡遇到對方。
   <br>
