@@ -2,9 +2,11 @@
 <div class="gallery-container">
 
   <div class="gallery">
-    <div v-for="photo_id in 50" :key="photo_id" class="gallery-item">
+    <div v-for="(photo, index) in photos" :key="index" class="gallery-item">
       <figure>
-        <img :src="`../src/assets/修圖/${photo_id}_sm.jpg`" />
+        <img :src="photo.sm" />
+
+        
         <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
       </figure>
     <!-- <p>OMG, seriously how cute are these dogs?</p> -->
@@ -14,17 +16,26 @@
 </template>
 
 <script lang="ts">
+
+interface Photo {
+  sm: string,
+  lg: string,
+}
+
 export default {
   data() {
     return {
-      photos: [
+      photos: [] as Photo[],
+    }
+  },
+  mounted() {
+    for(let i = 1; i <= 50; i++) {
+      this.photos.push(
         {
-          src: "_DSC2051.jpg",
-        },
-        {
-          src: "_DSC2059.jpg",
-        },
-      ],
+          sm: new URL(`../assets/gallery-photos/${i}_sm.jpg`, import.meta.url).toString(),
+          lg: new URL(`../assets/gallery-photos/${i}.jpg`, import.meta.url).toString()
+        }
+      )
     }
   }
 }
@@ -77,11 +88,21 @@ export default {
 }
 
 @media screen and (max-width: 500px) {
+  .gallery-container {
+    overflow: unset;
+    height: unset;
+  }
+
   .gallery {
-    column-count: 1;
+    column-count: 2;
   }
 }
 @media screen and (min-width: 501px) and (max-width: 700px) {
+  .gallery-container {
+    overflow: unset;
+    height: unset;
+  }
+
   .gallery {
     column-count: 2;
   }
@@ -89,6 +110,7 @@ export default {
 @media screen and (min-width: 701px) and (max-width: 900px) {
   .gallery-container {
     overflow: unset;
+    height: unset;
   }
 
   .gallery {
