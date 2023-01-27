@@ -26,14 +26,15 @@ export default {
   data() {
     return {
       photos: [] as Photo[],
+      gallery_url: "https://storage.googleapis.com/wedding_gallery/gallery-photos",
     }
   },
   mounted() {
     for(let i = 1; i <= 50; i++) {
       this.photos.push(
         {
-          sm: new URL(`../assets/gallery-photos/${i}_sm.jpg`, import.meta.url).toString(),
-          lg: new URL(`../assets/gallery-photos/${i}.jpg`, import.meta.url).toString()
+          sm: `${this.gallery_url}/${i}_sm.jpg`,
+          lg: `${this.gallery_url}/${i}.jpg`
         }
       )
     }
