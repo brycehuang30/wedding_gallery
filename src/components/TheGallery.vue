@@ -1,68 +1,81 @@
 <template>
-<div class="gallery-container">
+  <div class="gallery-container">
+    <div class="gallery">
+      <div
+        v-for="(photo, index) in preview_photos"
+        :key="index"
+        class="gallery-item"
+        @click="() => onShowLightBox(index)"
+      >
+        <figure>
+          <img :src="photo" />
 
-  <div class="gallery">
-    <div v-for="(photo, index) in preview_photos" :key="index" class="gallery-item" @click="() => onShowLightBox(index)">
-      <figure>
-        <img :src="photo" />
-        
-        <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
-      </figure>
-    <!-- <p>OMG, seriously how cute are these dogs?</p> -->
+          <!-- <figcaption>Picture of a few dogs having a rest and sleeping.</figcaption> -->
+        </figure>
+        <!-- <p>OMG, seriously how cute are these dogs?</p> -->
+      </div>
+
+      <div v-if="lightbox_visible" class="lightbox" @click="onHideLightBox">
+        <div class="lighbox-image-wrapper">
+          <img
+            @click.prevent="() => {}"
+            class="lighbox-image"
+            :src="large_photos[lightbox_photo_index]"
+          />
+        </div>
+      </div>
     </div>
-
-    <vue-easy-lightbox
-      :visible="is_lightbox_visible_ref"
-      :index="lightbox_index_ref"
-      :imgs="large_photos"
-      :moveDisabled="true"
-      :minZoom="1"
-      :maxZoom="1.5"
-      @hide="onHideLightBox"
-    >
-      <toolbar></toolbar>
-    </vue-easy-lightbox>
   </div>
-</div>
 </template>
 
 <script lang="ts">
-import VueEasyLightbox from 'vue-easy-lightbox'
-
 export default {
-  components: {
-    VueEasyLightbox,
-  },
   data() {
     return {
       preview_photos: [] as string[],
       large_photos: [] as string[],
-      gallery_url: "https://storage.googleapis.com/wedding_gallery/gallery-photos",
-      is_lightbox_visible_ref: false,
-      lightbox_index_ref: 0,
-    }
+      gallery_url:
+        "https://storage.googleapis.com/wedding_gallery/gallery-photos",
+      lightbox_visible: false,
+      lightbox_photo_index: 0,
+    };
   },
   methods: {
     onShowLightBox(index: number) {
-      this.is_lightbox_visible_ref = true;
-      this.lightbox_index_ref = index;
+      this.lightbox_visible = true;
+      this.lightbox_photo_index = index;
     },
 
     onHideLightBox() {
-      this.is_lightbox_visible_ref = false;
+      this.lightbox_visible = false;
+    },
+    preloadImage(url: string): Promise<void> {
+      return new Promise((resolve, reject) => {
+        const preloadImg = new Image();
+        preloadImg.onload = () => {
+          resolve();
+        };
+        preloadImg.onerror = () => {
+          reject(new Error(`Failed to load image from ${url}`));
+        };
+        preloadImg.src = url;
+      });
     },
   },
   mounted() {
     for (let i = 1; i <= 50; i++) {
       this.preview_photos.push(`${this.gallery_url}/${i}_sm.jpg`);
       this.large_photos.push(`${this.gallery_url}/${i}.jpg`);
+
+      this.large_photos.forEach((photo) => {
+        this.preloadImage(photo);
+      });
     }
-  }
-}
+  },
+};
 </script>
 
 <style scoped>
-
 .gallery-container {
   margin: 2rem auto;
   height: 90vh;
@@ -108,12 +121,28 @@ export default {
   padding: 8px;
 }
 
-:deep(.vel-btns-wrapper) {
-  width : 100%;
-  height : 100%;
+.lightbox {
+  bottom: 0;
+  left: 0;
+  margin: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 9998;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: background-color 0.5s;
 }
-:deep(.toolbar-btn__rotate) {
-  display: none;
+
+.lighbox-image-wrapper {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lighbox-image {
+  height: 90%;
+  border-radius: 14px;
 }
 
 @media screen and (max-width: 500px) {
@@ -146,5 +175,4 @@ export default {
     column-count: 3;
   }
 }
-
 </style>
