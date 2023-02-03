@@ -141,7 +141,8 @@ export default {
 }
 
 .lighbox-image {
-  height: 90%;
+  max-height: 90%;
+  max-width: 90%;
   border-radius: 14px;
 }
 
