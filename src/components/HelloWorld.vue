@@ -52,6 +52,7 @@ h3 {
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 14px;
 }
 
 @media (min-width: 1024px) {
