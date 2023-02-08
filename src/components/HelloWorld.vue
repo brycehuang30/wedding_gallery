@@ -12,8 +12,12 @@
   <br>
   <br>
 
-現在，我們終於決定結婚了！
+2023年2月5日，我們結婚了！
     </h3>
+    <div class="videobox">
+    <iframe frameBorder="0" src="https://www.youtube.com/embed/l2TYKXq0sGk?autoplay=1&mute=1">
+</iframe>
+    </div>
   </div>
 </template>
 
@@ -31,6 +35,23 @@ h3 {
 .greetings h1,
 .greetings h3 {
   text-align: center;
+}
+
+.videobox {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%;
+  margin-top: 2rem;
+}
+
+
+.videobox iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 @media (min-width: 1024px) {
