@@ -166,7 +166,7 @@ export default {
     column-count: 2;
   }
 }
-@media screen and (min-width: 701px) and (max-width: 900px) {
+@media screen and (min-width: 701px) and (max-width: 1024px) {
   .gallery-container {
     overflow: unset;
     height: unset;
